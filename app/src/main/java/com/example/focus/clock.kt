@@ -2,6 +2,9 @@ package com.example.focus
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -44,10 +47,9 @@ fun Timer (
     modifier:Modifier = Modifier,
     initialValue:Float = 0f,
     strokeWidth: Dp = 5.dp
-)
-{
-    var size by remember { mutableStateOf(IntSize.Zero)} //IntSize representing a size with integer width and height values
-                                                            //IntSize.Zero simply is width and height equal to zero
+) {
+    var size by remember { mutableStateOf(IntSize.Zero) } //IntSize representing a size with integer width and height values
+    //IntSize.Zero simply is width and height equal to zero
     var value by remember {
         mutableStateOf(initialValue)
     }
@@ -57,94 +59,94 @@ fun Timer (
     var isTimerisRunning by remember {
         mutableStateOf(false)
     }
-    LaunchedEffect(key1 = currenttime, key2 = isTimerisRunning )
+    LaunchedEffect(key1 = currenttime, key2 = isTimerisRunning)
     {
-        if(currenttime >0 &&isTimerisRunning){
+        if (currenttime > 0 && isTimerisRunning) {
             delay(100L)
-            currenttime -=100L
-            value = currenttime/totalTime.toFloat()
+            currenttime -= 100L
+            value = currenttime / totalTime.toFloat()
 
         }
     }
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .onSizeChanged {
-                size = it
-            }
+
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .onSizeChanged {
+                    size = it
+                }
         ) {
-            Canvas(modifier = modifier){
+            Canvas(modifier = modifier) {
                 drawArc(
                     color = inactiveBarColor,
                     startAngle = -215f,
                     sweepAngle = 250f,
                     useCenter = false,
-                    size = Size(size.width.toFloat(),size.height.toFloat()),
+                    size = Size(size.width.toFloat(), size.height.toFloat()),
                     style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
 
                 )
                 drawArc(
                     color = activeBarColor,
                     startAngle = -215f,
-                    sweepAngle = 250f*value,
+                    sweepAngle = 250f * value,
                     useCenter = false,
-                    size = Size(size.width.toFloat(),size.height.toFloat()),
+                    size = Size(size.width.toFloat(), size.height.toFloat()),
                     style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
 
                 )
-                val center = Offset(size.width/2f,size.height/2f)
-                val beta = (250f * value + 145f) * (PI/180f).toFloat()
-                val r  = size.width/2f
-                val a  = cos(beta)*r
-                val b = sin(beta)*r
+                val center = Offset(size.width / 2f, size.height / 2f)
+                val beta = (250f * value + 145f) * (PI / 180f).toFloat()
+                val r = size.width / 2f
+                val a = cos(beta) * r
+                val b = sin(beta) * r
 
                 drawPoints(
-                    listOf(Offset(center.x +a,center.y+b)),
+                    listOf(Offset(center.x + a, center.y + b)),
 
                     pointMode = PointMode.Points,
                     Color(109121),
-                    strokeWidth = (strokeWidth*3f).toPx(),
+                    strokeWidth = (strokeWidth * 3f).toPx(),
                     cap = StrokeCap.Round
                 )
             }
-        Text(
-            text = (currenttime / 1000L).toString(),
-            fontWeight = FontWeight.Bold,
-            fontSize = 44.sp,
-            color = Color.White
-        )
-       Button(
+            Text(
+                text = (currenttime / 1000L).toString(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 44.sp,
+                color = Color.Green
+            )
+            Button(
                 onClick = {
-                          if(currenttime<=0L)
-                          {
-                              currenttime = totalTime
-                              isTimerisRunning = true
+                    if (currenttime <= 0L) {
+                        currenttime = totalTime
+                        isTimerisRunning = true
 
-                          }else{
-                              isTimerisRunning =!isTimerisRunning
-                          }
-                          },
+                    } else {
+                        isTimerisRunning = !isTimerisRunning
+                    }
+                },
                 modifier = Modifier.align(Alignment.BottomCenter),
                 colors = ButtonDefaults.buttonColors(
-                    if(!isTimerisRunning||currenttime<=0L)
-                    {
+                    if (!isTimerisRunning || currenttime <= 0L) {
                         Color.Green
-                    }
-                    else{
+                    } else {
                         Color.Red
                     }
                 ),
 
-           ) {
-            Text(text = if (isTimerisRunning &&currenttime>=0L) "Stop"
-                        else if (!isTimerisRunning&&currenttime>=0L) "Start"
-                        else "ReStart"
-            )
-       }
-    }
+                ) {
+                Text(
+                    text = if (isTimerisRunning && currenttime >= 0L) "Stop"
+                    else if (!isTimerisRunning && currenttime >= 0L) "Start"
+                    else "ReStart"
+                )
+            }
+        }
 
-}
-@Preview
+    }
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewTimer()
 {
@@ -153,7 +155,7 @@ fun PreviewTimer()
         handleColor = Color.Green,
         inactiveBarColor = Color.DarkGray,
         activeBarColor = Color(0xFF37B900),
-        modifier = Modifier.size(200.dp)
+        modifier = Modifier.size(300.dp)
 
     )
 }

@@ -58,77 +58,54 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-        // Creating a Simple Scaffold
-                // Layout for the application
-                Scaffold(
-
-                    // Creating a Top Bar
-
-                    // Creating Content
-                    content = {
-
-                        // Creating a Column Layout
-                        Column(
-                            Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-
-                            // Declaring circle radius
-                            val radius = 200f
-
-                            // Creating animation
-                            val animateFloat = remember { Animatable(0f) }
-                            LaunchedEffect(animateFloat) {
-                                animateFloat.animateTo(
-                                    targetValue = 1f,
-                                    animationSpec = tween(
-                                        durationMillis = 3000,
-                                        easing = LinearEasing
-                                    )
-                                )
-                            }
-
-                            // Creating Arc with useCenter as True
-                            Row {
-                                Canvas(modifier = Modifier.width(100.dp).height(100.dp)) {
-                                    drawArc(
-                                        color = Color.Black,
-                                        startAngle = 0f,
-                                        sweepAngle = 360f * animateFloat.value,
-                                        useCenter = true,
-                                        size = Size(radius * 2, radius * 2),
-                                        style = Stroke(2.0f)
-                                    )
-                                }
-                            }
-
-                            // Adding a Space of height 100dp
-                            Spacer(modifier = Modifier.height(100.dp))
-
-                            // Creating Arc with useCenter as False
-                            Row {
-                                Canvas(modifier = Modifier.width(100.dp).height(100.dp)) {
-                                    drawArc(
-                                        color = Color.Black,
-                                        startAngle = 0f,
-                                        sweepAngle = 360f * animateFloat.value,
-                                        useCenter = false,
-                                        size = Size(radius * 2, radius * 2),
-                                        style = Stroke(2.0f)
-                                    )
-                                }
-                            }
-                        }
-                    }
+            Surface(
+                color = Color(0xFF101010),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Box(contentAlignment = Alignment.Center
                 )
+                {
+                    Timer(
+                        totalTime = 100L*1000L,
+                        handleColor = Color.Green,
+                        inactiveBarColor = Color.DarkGray,
+                        activeBarColor = Color(0xFF37B900),
+                        modifier = Modifier.size(200.dp)
+                    )
+                }
+            }
+        // Creating a Simple Scaffold
+                // Layout for the applicati
+
+
+
             }
         }
     }
 
 
 
+@Preview
+@Composable
+fun Preview_Timer()
+{
+    Surface(
+        color = Color(0xFF101010),
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(contentAlignment = Alignment.Center
+        )
+        {
+            Timer(
+                totalTime = 100L*1000L,
+                handleColor = Color.Green,
+                inactiveBarColor = Color.DarkGray,
+                activeBarColor = Color(0xFF37B900),
+                modifier = Modifier.size(200.dp)
+            )
+        }
+    }
+}
 
 //
 //data class CountdownState(var min: Int, var sec: Int, var values: String)
