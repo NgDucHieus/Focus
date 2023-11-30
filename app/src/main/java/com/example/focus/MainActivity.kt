@@ -51,6 +51,9 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import com.example.focus.ui.theme.countdown.customListView
+import android.content.Context
+
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -65,13 +68,14 @@ class MainActivity : ComponentActivity() {
                 Box(contentAlignment = Alignment.Center
                 )
                 {
-                    Timer(
-                        totalTime = 100L*1000L,
-                        handleColor = Color.Green,
-                        inactiveBarColor = Color.DarkGray,
-                        activeBarColor = Color(0xFF37B900),
-                        modifier = Modifier.size(200.dp)
-                    )
+//                    Timer(
+//                        totalTime = 100L*1000L,
+//                        handleColor = Color.Green,
+//                        inactiveBarColor = Color.DarkGray,
+//                        activeBarColor = Color(0xFF37B900),
+//                        modifier = Modifier.size(200.dp)
+//                    )
+                    customListView(context =this@MainActivity)
                 }
             }
         // Creating a Simple Scaffold
